@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="primefaces"
+      xmlns:f="jakarta.faces.core">
+    <h:head>
+        <title>SmartAthlete :: Injuries</title>
+    </h:head>
+    
+    <h:body>
+        <h:form>
+            <p:dataTable editable="true" value="#{injuryBean.newTuple}" var="injury">
+                <p:column title="Insert" style="width: 40px; text-align: center;">
+                    <p:commandButton value="" action="#{injuryBean.insertTuple(injury)}" update="id_growl id_dataTableInjuries" styleClass="ui-button-raised customCursor" icon="pi pi-plus-circle" style="width: 33px; height: 33px;"/>
+                </p:column>
+                
+                <p:column headerText="id_injury_type">
+                    <p:inputText value="#{injury.idInjuryType}" placeholder="Type a injury type id" maxlength="50" onfocus="this.selectionStart = this.selectionEnd = this.value.length;"/>
+                </p:column>
+            </p:dataTable>
+            
+            <p:dataTable editable="true" id="id_dataTableInjuries" value="#{injuryBean.listOfTuples}" var="injury" paginator="true" paginatorPosition="both" paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageReport}" currentPageReportTemplate="{startRecord} to {endRecord} of #{injuryBean.listOfTuples.size()}" rows="10">
+                <p:ajax event="rowEdit" listener="#{injuryBean.onRowEdit}" update="id_growl id_dataTableInjuries"/>
+                
+                <p:column title="Edit" toggleable="false" style="width: 80px;">
+                    <p:rowEditor style="vertical-align: middle;"/>
+                </p:column>
+                
+                <p:column title="Delete" style="width:40px; text-align: center;">
+                    <p:commandButton value="" styleClass="ui-button-raised ui-button-danger customCursor" icon="pi pi-trash" style ="width: 33px; height: 33px;" action="#{injuryBean.deleteTuple(injury)}" update="id_growl id_dataTableInjuries"/>
+                </p:column>
+                
+                <p:column headerText="id_injury_type" footerText="id_injury_type" sortBy="#{injury.idInjuryType}" filterBy="#{injury.idInjuryType}" filterMatchMode="startsWith" filterPlaceholder="search injury id">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <p:outputLabel value="#{injury.idInjuryType}"/>
+                        </f:facet>
+                        
+                        <f:facet name="input">
+                            <p:inputText value="#{injury.idInjuryType}" valueChangeListener="#{injuryBean.onValueChangedIdInjuryType}" placeholder="Type a injury type id" required="true" requiredMessage="Injury type id is required" maxlength="50" onfocus="this.selectionStart = this.selectionEnd = this.value.length;"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>

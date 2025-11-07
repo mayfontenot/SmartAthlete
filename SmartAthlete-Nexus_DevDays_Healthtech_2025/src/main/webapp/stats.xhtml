@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="primefaces"
+      xmlns:f="jakarta.faces.core">
+    <h:head>
+        <title>SmartAthlete :: Stats</title>
+    </h:head>
+    
+    <h:body>
+        <h:form>
+            <p:inputNumber value="#{statsBean.startAge}" minValue="6" maxValue="18" placeholder="Type start age" onfocus="this.selectionStart = this.selectionEnd = this.value.length;"/>
+            <p:inputNumber value="#{statsBean.endAge}" minValue="6" maxValue="18" placeholder="Type end age" onfocus="this.selectionStart = this.selectionEnd = this.value.length;"/>
+            <p:commandButton value="" action="#{statsBean.createModels()}" update="id_growl id_chartInjuriesByAge id_chartInjuriesBySport id_chartInjuriesByCoach" styleClass="ui-button-raised customCursor" icon="pi pi-sync" style="vertical-align: top; width: 33px; height: 33px;"/>
+            <p:chart id="id_chartInjuriesByAge" value="#{statsBean.injuriesByAgeModel}" style="width: 100%; height: 500px;">
+                <p:ajax event="itemSelect" listener="#{statsBean.itemSelect}" update="id_growl"/>
+            </p:chart>
+            
+            <p:selectOneMenu value="#{statsBean.sport}" filter="true" filterMatchMode="contains" filterNormalize="true" onfocus="this.selectionStart = this.selectionEnd = this.value.length;">
+                <f:selectItems value="#{sportBean.sportNameIds}"/>
+
+                <f:facet name="footer">
+                    <p:divider styleClass="mt-0"/>
+                    <h:outputText escape="false" value="#{sportBean.sportNameIds.size()} options" style="font-weight:bold;"/>
+                </f:facet>
+            </p:selectOneMenu>
+            <p:commandButton value="" action="#{statsBean.createModels()}" update="id_growl id_chartInjuriesByAge id_chartInjuriesBySport id_chartInjuriesByCoach" styleClass="ui-button-raised customCursor" icon="pi pi-sync" style="vertical-align: top; width: 33px; height: 33px;"/>
+            <p:chart id="id_chartInjuriesBySport" value="#{statsBean.injuriesBySportModel}" style="width: 100%; height: 500px;">
+                <p:ajax event="itemSelect" listener="#{statsBean.itemSelect}" update="id_growl"/>
+            </p:chart>
+            
+            <p:selectOneMenu value="#{statsBean.coach}" filter="true" filterMatchMode="startsWith" filterNormalize="true" onfocus="this.selectionStart = this.selectionEnd = this.value.length;">
+                <f:selectItems value="#{coachBean.coachIds}"/>
+
+                <f:facet name="footer">
+                    <p:divider styleClass="mt-0"/>
+                    <h:outputText escape="false" value="#{coachBean.coachIds.size()} options" style="font-weight:bold;"/>
+                </f:facet>
+            </p:selectOneMenu>
+            <p:commandButton value="" action="#{statsBean.createModels()}" update="id_growl id_chartInjuriesByAge id_chartInjuriesBySport id_chartInjuriesByCoach" styleClass="ui-button-raised customCursor" icon="pi pi-sync" style="vertical-align: top; width: 33px; height: 33px;"/>
+            <p:chart id="id_chartInjuriesByCoach" value="#{statsBean.injuriesByCoachModel}" style="width: 100%; height: 500px;">
+                <p:ajax event="itemSelect" listener="#{statsBean.itemSelect}" update="id_growl"/>
+            </p:chart>
+            
+            <p>* These data-driven statistics using SmartAthlete can be used to give young athletes with particular high risk factors more specialized and preventive care.</p>
+        </h:form>
+    </h:body>
+</html>
