@@ -1,0 +1,2 @@
+SmartAthlete utilizes Jakarta EE, Jakarta Faces, Prime Faces, CDI Beans, and MySQL to implement real-time data-driven graphs from a database of athletes, coaches, injuries, and sports. SmartAthlete can be used to give young athletes with high risk factors more specialized and preventive care. Developed for Nexus DevDays Healthtech 2025.<br/>
+Configuration for the MySQL server is in utilities.MySQLConnector (IP: localhost, port: 8889)
