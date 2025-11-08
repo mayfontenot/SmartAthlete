@@ -10,6 +10,6 @@ SmartAthlete was developed for the Nexus DevDays HealthTech 2025 challenge, and 
 ![Login](https://github.com/mayfontenot/SmartAthlete/blob/main/screenshots/login.png)
 
 ## Installation:
-1. Create a MySQL database named "db_health_injuries" and import the included MySQL_database/db_health_injuries.sql file
+1. Create a MySQL database named "db_smartathlete" and import the included MySQL_database/db_smartathlete.sql file
 3. Open the project folder in your IDE and configure utilities.MySQLConnector to match your MySQL server, DEFAULT config is (IP: localhost, port: 8889)
 5. Build and deploy the WAR file to the web
