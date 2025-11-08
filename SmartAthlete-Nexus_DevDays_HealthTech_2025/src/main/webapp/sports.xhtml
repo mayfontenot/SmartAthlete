@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="primefaces"
+      xmlns:f="jakarta.faces.core">
+    <h:head>
+        <title>SmartAthlete :: Sports</title>
+    </h:head>
+    
+    <h:body>
+        <h:form>
+            <p:dataTable editable="true" value="#{sportBean.newTuple}" var="sport">
+                <p:column title="Insert" style="width: 40px; text-align: center;">
+                    <p:commandButton value="" action="#{sportBean.insertTuple(sport)}" update="id_growl id_dataTableSports" styleClass="ui-button-raised customCursor" icon="pi pi-plus-circle" style="width: 33px; height: 33px;"/>
+                </p:column>
+                
+                <p:column headerText="sport_name">
+                    <p:inputText value="#{sport.idSportName}" placeholder="Type a sport name" maxlength="50" onfocus="this.selectionStart = this.selectionEnd = this.value.length;"/>
+                </p:column>
+            </p:dataTable>
+            
+            <p:dataTable editable="true" id="id_dataTableSports" value="#{sportBean.listOfTuples}" var="sport" paginator="true" paginatorPosition="both" paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageReport}" currentPageReportTemplate="{startRecord} to {endRecord} of #{sportBean.listOfTuples.size()}" rows="10">
+                <p:ajax event="rowEdit" listener="#{sportBean.onRowEdit}" update="id_growl id_dataTableSports"/>
+                
+                <p:column title="Edit" toggleable="false" style="width: 80px;">
+                    <p:rowEditor style="vertical-align: middle;"/>
+                </p:column>
+                
+                <p:column title="Delete" style="width:40px; text-align: center;">
+                    <p:commandButton value="" styleClass="ui-button-raised ui-button-danger customCursor" icon="pi pi-trash" style ="width: 33px; height: 33px;" action="#{sportBean.deleteTuple(sport)}" update="id_growl id_dataTableSports"/>
+                </p:column>
+                
+                <p:column headerText="sport_name" footerText="sport_name" sortBy="#{sport.idSportName}" filterBy="#{sport.idSportName}" filterMatchMode="contains" filterPlaceholder="search sport name">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <p:outputLabel value="#{sport.idSportName}"/>
+                        </f:facet>
+                        
+                        <f:facet name="input">
+                            <p:inputText value="#{sport.idSportName}" valueChangeListener="#{sportBean.onValueChangedSportName}" placeholder="Type a sport name" required="true" requiredMessage="Sport name is required" maxlength="50" onfocus="this.selectionStart = this.selectionEnd = this.value.length;"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>

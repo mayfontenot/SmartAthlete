@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="primefaces"
+      xmlns:f="jakarta.faces.core">
+    <h:head>
+        <title>SmartAthlete :: Athlete Injuries</title>
+    </h:head>
+    
+    <h:body>
+        <h:form>
+            <p:dataTable editable="true" value="#{athleteInjuryBean.newTuple}" var="ais">
+                <p:column title="Insert" style="width: 40px; text-align: center;">
+                    <p:commandButton value="" action="#{athleteInjuryBean.insertTuple(ais)}" update="id_growl id_dataTableAthleteInjury" styleClass="ui-button-raised customCursor" icon="pi pi-plus-circle" style="width: 33px; height: 33px;"/>
+                </p:column>
+                
+                <p:column headerText="id_athlete">
+                    <p:selectOneMenu value="#{ais.idAthlete}" filter="true" filterMatchMode="startsWith" filterNormalize="true" onfocus="this.selectionStart = this.selectionEnd = this.value.length;">
+                        <f:selectItems value="#{athleteBean.athleteIds}"/>
+
+                        <f:facet name="footer">
+                            <p:divider styleClass="mt-0"/>
+                            <h:outputText escape="false" value="#{athleteBean.athleteIds.size()} options" style="font-weight:bold;"/>
+                        </f:facet>
+                    </p:selectOneMenu>
+                </p:column>
+                
+                <p:column headerText="id_injury_type">
+                    <p:selectOneMenu value="#{ais.idInjuryType}" filter="true" filterMatchMode="startsWith" filterNormalize="true" onfocus="this.selectionStart = this.selectionEnd = this.value.length;">
+                        <f:selectItems value="#{injuryBean.injuryIds}"/>
+
+                        <f:facet name="footer">
+                            <p:divider styleClass="mt-0"/>
+                            <h:outputText escape="false" value="#{injuryBean.injuryIds.size()} options" style="font-weight:bold;"/>
+                        </f:facet>
+                    </p:selectOneMenu>
+                </p:column>
+                
+                <p:column headerText="date_of_injury">
+                    <p:calendar value="#{ais.dateOfInjury}" placeholder="Type date of injury" onfocus="this.selectionStart = this.selectionEnd = this.value.length;"/>
+                </p:column>
+
+                <p:column headerText="description">
+                    <p:inputTextarea value="#{ais.description}" placeholder="Type description" maxlength="1000" rows="1" onfocus="this.selectionStart = this.selectionEnd = this.value.length;"/>
+                </p:column>
+            </p:dataTable>
+            
+            <p:dataTable editable="true" id="id_dataTableAthleteInjury" value="#{athleteInjuryBean.listOfTuples}" var="ais" paginator="true" paginatorPosition="both" paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageReport}" currentPageReportTemplate="{startRecord} to {endRecord} of #{athleteInjuryBean.listOfTuples.size()}" rows="10">
+                <p:ajax event="rowEdit" listener="#{athleteInjuryBean.onRowEdit}" update="id_growl id_dataTableAthleteInjury"/>
+                
+                <p:column title="Edit" toggleable="false" style="width: 80px;">
+                    <p:rowEditor style="vertical-align: middle;"/>
+                </p:column>
+                
+                <p:column title="Delete" style="width: 40px; text-align: center;">
+                    <p:commandButton value="" styleClass="ui-button-raised ui-button-danger customCursor" icon="pi pi-trash" action="#{athleteInjuryBean.deleteTuple(ais)}" update="id_growl id_dataTableAthleteInjury" style="width: 33px; height: 33px;"/>
+                </p:column>
+                
+                <p:column headerText="id_athlete" footerText="id_athlete" sortBy="#{ais.idAthlete}" filterBy="#{ais.idAthlete}" filterMatchMode="startsWith" filterPlaceholder="search athlete id">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <p:outputLabel value="#{ais.idAthlete}"/>
+                        </f:facet>
+                        
+                        <f:facet name="input">
+                            <p:selectOneMenu value="#{ais.idAthlete}" valueChangeListener="#{athleteInjuryBean.onValueChangedIdAthlete}" filter="true" filterMatchMode="startsWith" filterNormalize="true" required="true" requiredMessage="Athlete id is required" onfocus="this.selectionStart = this.selectionEnd = this.value.length;">
+                                <f:selectItems value="#{athleteBean.athleteIds}"/>
+
+                                <f:facet name="footer">
+                                    <p:divider styleClass="mt-0"/>
+                                    <h:outputText escape="false" value="#{athleteBean.athleteIds.size()} options" style="font-weight:bold;"/>
+                                </f:facet>
+                            </p:selectOneMenu>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                
+                <p:column headerText="id_injury_type" footerText="id_injury_type" filterBy="#{ais.idInjuryType}" filterMatchMode="startsWith" filterPlaceholder="search injury type">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <p:outputLabel value="#{ais.idInjuryType}"/>
+                        </f:facet>
+                        
+                        <f:facet name="input">
+                            <p:selectOneMenu value="#{ais.idInjuryType}" valueChangeListener="#{athleteInjuryBean.onValueChangedIdInjuryType}" filter="true" filterMatchMode="startsWith" filterNormalize="true" required="true" requiredMessage="Injury type id is required" onfocus="this.selectionStart = this.selectionEnd = this.value.length;">
+                                <f:selectItems value="#{injuryBean.injuryIds}"/>
+
+                                <f:facet name="footer">
+                                    <p:divider styleClass="mt-0"/>
+                                    <h:outputText escape="false" value="#{injuryBean.injuryIds.size()} options" style="font-weight:bold;"/>
+                                </f:facet>
+                            </p:selectOneMenu>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                
+                <p:column headerText="date_of_injury" footerText="date_of_injury" filterBy="#{ais.dateOfInjury}" filterMatchMode="contains" filterPlaceholder="search date of injury">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <p:outputLabel value="#{ais.dateOfInjury}"/>
+                        </f:facet>
+                        
+                        <f:facet name="input">
+                            <p:calendar value="#{ais.dateOfInjury}" valueChangeListener="#{athleteInjuryBean.onValueChangedDateOfInjury}" placeholder="Type date of injury" required="true" requiredMessage="Date of injury is required" onfocus="this.selectionStart = this.selectionEnd = this.value.length;"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="description" footerText="description" filterBy="#{ais.description}" filterMatchMode="contains" filterPlaceholder="search description">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <p:outputLabel value="#{ais.description}"/>
+                        </f:facet>
+                        
+                        <f:facet name="input">
+                            <p:inputTextarea value="#{ais.description}" placeholder="Type description" required="true" requiredMessage="Description is required" maxlength="1000" rows="1" onfocus="this.selectionStart = this.selectionEnd = this.value.length;"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>

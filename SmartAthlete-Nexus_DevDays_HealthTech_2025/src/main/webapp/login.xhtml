@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title >SmartAthlete :: Login</title>
+        <h:outputStylesheet library="css" name="style.css"/>
+    </h:head>
+    
+    <h:body>
+        <h:form style="margin-top:2%; display: block; margin-left: auto;  margin-right: auto; width: fit-content">
+            <p:growl id="id_growl" showDetail="true" life="4000" redisplay="false"/>
+
+            <p:panelGrid columns="1" style="width: 26rem !important;">
+                <p:column>
+                    <p:outputLabel escape="false" value="Welcome to SmartAthlete" style="display: inline-block; width:60%; font-family:  'Verdana', 'Helvetica', 'Arial', 'Times New Roman', 'sans-serif'; color:#efeee8; font-size:2.0em; font-weight: bold;  vertical-align: top;"/>
+                    <p:graphicImage library="images" name="stopwatch.png" width="107" height="107" style="width: fit-content; display: inline; vertical-align: top; float:right;"/>
+                </p:column>
+
+                <p:column>                
+                    <p:inputText value="#{loginBean.userId}" placeholder="User ID" required="true" requiredMessage="User ID is required" size="50" maxlength="50" style="width:100%"/>     
+                </p:column>
+                
+                <p:column>
+                    <p:password value="#{loginBean.password}" placeholder="Password" toggleMask="true" required="true" requiredMessage="Password is required" size="50" maxlength="50" style="width:100%"/>
+                </p:column>
+
+                <p:commandButton style="display: block; margin-left: auto; margin-right: auto; border: 1px solid lightgrey; color: #efeee8;" ajax="false" value="Login" action="#{loginBean.login()}"/>
+            </p:panelGrid>
+        </h:form>
+        
+        <div style="margin-left: auto; margin-right: auto; width: fit-content; margin-top: 0px;margin-bottom: 1em; display: block;">
+            <span style="vertical-align: middle; font-size:0.7em">©2025 Mayware</span>
+        </div>
+        
+        <div style="margin-left: auto; margin-right: auto; width: fit-content; margin-top:0px;margin-bottom:1em; display: block;">
+            * This is a demonstration version, please login with User ID: root , Password: password
+        </div>
+    </h:body>
+</html>
